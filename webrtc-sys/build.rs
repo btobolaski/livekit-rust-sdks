@@ -17,6 +17,11 @@ use std::path::PathBuf;
 use std::{env, path, process::Command};
 
 fn main() {
+    eprintln!("env:");
+    for (key, value) in env::vars() {
+        eprintln!("  {key}: {value}");
+    }
+
     if env::var("DOCS_RS").is_ok() {
         return;
     }
