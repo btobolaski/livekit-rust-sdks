@@ -87,7 +87,7 @@ pub fn custom_dir() -> Option<path::PathBuf> {
 /// across multiple crates without dependencies constraints
 /// This also has the benefit of not re-downloading the binaries for each crate
 pub fn prebuilt_dir() -> path::PathBuf {
-    let target_dir = scratch::path(SCRATH_PATH);
+    let target_dir = path::PathBuf::from(env::var("OUT_DIR").unwrap());
     path::Path::new(&target_dir).join(format!(
         "livekit/{}-{}/{}",
         webrtc_triple(),
@@ -180,7 +180,7 @@ pub fn configure_jni_symbols() -> Result<(), Box<dyn Error>> {
 }
 
 pub fn download_webrtc() -> Result<(), Box<dyn Error>> {
-    let dir = scratch::path(SCRATH_PATH);
+    let dir = path::PathBuf::from(env::var("OUT_DIR").unwrap());
     let flock = File::create(dir.join(".lock"))?;
     flock.lock_exclusive()?;
 
